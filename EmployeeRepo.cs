@@ -104,5 +104,39 @@ namespace EmployeePayrollADO.NET
             }
             return false;
         }
+        /// <summary>
+        /// Updates the table value for the given condition
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public bool UpdateTables(string updateQuery)
+        {
+            using (this.connection)
+            {
+                try
+                {
+                    this.connection.Open();
+                    SqlCommand command = this.connection.CreateCommand();
+                    command.CommandText = updateQuery;
+                    int numberOfEffectedRows = command.ExecuteNonQuery();
+                    if (numberOfEffectedRows != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    this.connection.Close();
+                }
+            }
+        }
     }
 }
