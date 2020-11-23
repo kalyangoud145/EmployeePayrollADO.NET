@@ -10,6 +10,9 @@ namespace EmployeePayrollADO.NET
         // Connecting string for connection to database 
         public static string connectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = Payroll_Service; Integrated Security = True";
         SqlConnection connection = new SqlConnection(connectionString);
+        /// <summary>
+        /// Method Reads the data from the table and prints the values
+        /// </summary>
         public void GetAllEmployee()
         {
             try
@@ -54,6 +57,52 @@ namespace EmployeePayrollADO.NET
             {
                 Console.WriteLine(e.Message);
             }
+        }
+        /// <summary>
+        /// Method adds the values to the table and return true if added or false
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public bool AddEmployee(EmployeeModel model)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("SpAddEmployeeDetails", this.connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@Name", model.Name);
+                    sqlCommand.Parameters.AddWithValue("@Salary", model.Salary);
+                    sqlCommand.Parameters.AddWithValue("@Start_Date", DateTime.Now);
+                    sqlCommand.Parameters.AddWithValue("@Gender", model.Gender);
+                    sqlCommand.Parameters.AddWithValue("@PhoneNumber", model.PhoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@Address", model.Address);
+                    sqlCommand.Parameters.AddWithValue("@Department", model.Department);
+                    sqlCommand.Parameters.AddWithValue("@basic_Pay", model.basic_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Deductions", model.Deductions);
+                    sqlCommand.Parameters.AddWithValue("@Taxable_Pay", model.Taxable_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Income_tax", model.Income_tax);
+                    sqlCommand.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
+                    this.connection.Open();
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+            return false;
         }
     }
 }
