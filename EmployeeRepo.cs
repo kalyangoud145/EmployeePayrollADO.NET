@@ -152,11 +152,6 @@ namespace EmployeePayrollADO.NET
             }
         }
         /// <summary>
-        /// Method displays Sums  of the basic pay gender wise.
-        /// </summary>
-        public void SumOfSalaryGenderWise()
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
         /// Gets the employees joined after given date range
         /// </summary>
         /// <param name="dateRangeQuery">The date range query.</param>
@@ -173,180 +168,6 @@ namespace EmployeePayrollADO.NET
             {
                 using (connection)
                 {
-                    // Query for retriving sum as basic pay gender wise
-                    string query = @"SELECT gender,sum(basic_pay) as CombineSalary from Employee_Payroll  group by gender";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    connection.Open();
-                    // Creates instance for data reader
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    // Creates instance for data reader
-                    if (dataReader.HasRows)
-                    {
-                        // Reads all the data in table
-                        while (dataReader.Read())
-                        {
-                            // Prints the "0" and "1" column for gender and aggregate basic pay respectively
-                            Console.Write(dataReader.GetString(0) + "\t");
-                            Console.Write(dataReader.GetDecimal(1) + "\t");
-                            Console.WriteLine("\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found");
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-        }
-        /// <summary>
-        /// Method displays  Average  of salary gender wise.
-        /// </summary>
-        public void AverageOfSalaryGenderWise()
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                using (connection)
-                {
-                    // Query for retriving average of  basic pay gender wise
-                    string query = @"select gender, AVG(basic_pay) from Employee_Payroll group by gender";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    connection.Open();
-                    // Creates instance for data reader
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    // Creates instance for data reader
-                    if (dataReader.HasRows)
-                    {
-                        // Reads all the data in table
-                        while (dataReader.Read())
-                        {
-                            // Prints the "0" and "1" column for gender and average of basic pay respectively
-                            Console.Write(dataReader.GetString(0) + "\t");
-                            Console.Write(dataReader.GetDecimal(1));
-                            Console.WriteLine("\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found");
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-        }
-        /// <summary>
-        /// Method displays Minimum  salary gender wise.
-        /// </summary>
-        public void MinimumSalaryGenderWise()
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                using (connection)
-                {
-                    // Query for retriving minimum of  basic pay gender wise
-                    string query = @"select gender, MIN(basic_pay) from Employee_Payroll group by gender";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    connection.Open();
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    if (dataReader.HasRows)
-                    {
-                        while (dataReader.Read())
-                        {
-                            // Prints the "0" and "1" column for gender and minimum of basic pay respectively
-                            Console.Write(dataReader.GetString(0) + "\t");
-                            Console.Write(dataReader.GetDecimal(1));
-                            Console.WriteLine("\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found");
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-        }
-        /// <summary>
-        /// Method displays Maximum  basic pay gender wise.
-        /// </summary>
-        public void MaximumSalaryGenderWise()
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                using (connection)
-                {
-                    // Query for retriving Maximum of  basic pay gender wise
-                    string query = @"select gender, MAX(basic_pay) from Employee_Payroll group by gender";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    connection.Open();
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    if (dataReader.HasRows)
-                    {
-                        while (dataReader.Read())
-                        {
-                            // Prints the "0" and "1" column for gender and Maximum of basic pay respectively
-                            Console.Write(dataReader.GetString(0) + "\t");
-                            Console.Write(dataReader.GetDecimal(1));
-                            Console.WriteLine("\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found");
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-        }
-        /// <summary>
-        /// Counts the of employees gender wise.
-        /// </summary>
-        public void CountOfEmployeesGenderWise()
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                using (connection)
-                {
-                    // Query for retriving count of  employees gender wise
-                    string query = @"select gender, COUNT(gender) from Employee_Payroll group by gender";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    connection.Open();
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    if (dataReader.HasRows)
-                    {
-                        while (dataReader.Read())
-                        {
-                            // Prints the "0" and "1" column for gender and count of gender respectively
-                            Console.Write(dataReader.GetString(0) + "\t");
-                            Console.Write(dataReader.GetInt32(1));
-                            Console.WriteLine("\n");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found");
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                    Console.WriteLine(exception.Message);
                     string query = dateRangeQuery;
                     SqlCommand command = new SqlCommand(query, connection);
                     this.connection.Open();
@@ -383,6 +204,216 @@ namespace EmployeePayrollADO.NET
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Method displays Sums  of the basic pay gender wise.
+        /// </summary>
+        public void SumOfSalaryGenderWise()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Query for retriving sum as basic pay gender wise
+                    string query = @"SELECT gender,sum(basic_pay) as CombineSalary from Employee_Payroll where gender='M' group by gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    // Creates instance for data reader
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    // Creates instance for data reader
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            // Prints the "0" and "1" column for gender and aggregate basic pay respectively
+                            Console.Write(dataReader.GetString(0) + "\t");
+                            Console.Write(dataReader.GetDecimal(1));
+                            Console.WriteLine("\n");
+                        }
+                        connection.Close();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Method displays  Average  of salary gender wise.
+        /// </summary>
+        public void AverageOfSalaryGenderWise()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Query for retriving average of  basic pay gender wise
+                    string query = @"select gender, AVG(basic_pay) from Employee_Payroll group by gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    // Creates instance for data reader
+                    SqlDataReader dataReader = command.ExecuteReader();                    
+                    if (dataReader.HasRows)
+                    {
+                        // Reads all the data in table
+                        while (dataReader.Read())
+                        {
+                            // Prints the "0" and "1" column for gender and average of basic pay respectively
+                            Console.Write(dataReader.GetString(0) + "\t");
+                            Console.Write(dataReader.GetDecimal(1));
+                            Console.WriteLine("\n");
+                        }
+                        connection.Close();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Method displays Minimum  salary gender wise.
+        /// </summary>
+        public void MinimumSalaryGenderWise()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Query for retriving minimum of  basic pay gender wise
+                    string query = @"select gender, MIN(basic_pay) from Employee_Payroll group by gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            // Prints the "0" and "1" column for gender and minimum of basic pay respectively
+                            Console.Write(dataReader.GetString(0) + "\t");
+                            Console.Write(dataReader.GetDecimal(1));
+                            Console.WriteLine("\n");
+                        }
+                        connection.Close();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Method displays Maximum  basic pay gender wise.
+        /// </summary>
+        public void MaximumSalaryGenderWise()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Query for retriving Maximum of  basic pay gender wise
+                    string query = @"select gender, MAX(basic_pay) from Employee_Payroll group by gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            // Prints the "0" and "1" column for gender and Maximum of basic pay respectively
+                            Console.Write(dataReader.GetString(0) + "\t");
+                            Console.Write(dataReader.GetDecimal(1));
+                            Console.WriteLine("\n");
+                        }
+                        connection.Close();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Counts the of employees gender wise.
+        /// </summary>
+        public void CountOfEmployeesGenderWise()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    // Query for retriving count of  employees gender wise
+                    string query = @"select gender, COUNT(gender) from Employee_Payroll group by gender";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            // Prints the "0" and "1" column for gender and count of gender respectively
+                            Console.Write(dataReader.GetString(0) + "\t");
+                            Console.Write(dataReader.GetInt32(1));
+                            Console.WriteLine("\n");
+                        }
+                        connection.Close();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
             }
             finally
             {
