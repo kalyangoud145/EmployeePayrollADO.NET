@@ -7,7 +7,7 @@ namespace EmployeePayrollADO.NET
         static void Main(string[] args)
         {
             EmployeeRepo repo = new EmployeeRepo();
-            repo.GetAllEmployee();
+            Console.WriteLine(repo.UpdateTables("update Employee_Payroll set basic_Pay = 3000000.00 where Id=5") ); 
         }
     }
 }
