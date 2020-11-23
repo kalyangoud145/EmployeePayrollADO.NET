@@ -420,5 +420,43 @@ namespace EmployeePayrollADO.NET
                 this.connection.Close();
             }
         }
+        /// <summary>
+        /// Deletes the respective value from table
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
+        public bool DeleteValue()
+        {
+            using (this.connection)
+            {
+                try
+                {
+                    this.connection.Open();
+                    SqlCommand command = this.connection.CreateCommand();
+                    // Query for deleting the data from table
+                    command.CommandText = "delete from Employee_Payroll where Id =3";
+                    // Returns number of rows effected
+                    int numberOfEffectedRows = command.ExecuteNonQuery();
+                    // If number of rows not equal to zero then retuns true 
+                    // Else returns false
+                    if (numberOfEffectedRows != 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    this.connection.Close();
+                }
+            }
+        }
     }
 }
