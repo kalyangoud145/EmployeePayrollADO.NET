@@ -7,7 +7,7 @@ namespace EmployeePayrollADO.NET
     /// <summary>
     /// POCO class for getting and setting the values
     /// </summary>
-    class EmployeeModel
+    public class EmployeeModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
