@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EmployeePayrollADO.NET
 {
@@ -6,7 +7,6 @@ namespace EmployeePayrollADO.NET
     {
         static void Main(string[] args)
         {
-            EmployeeModel employeeModel = new EmployeeModel();
             EmployeeRepo repo = new EmployeeRepo();
             repo.SumOfSalaryGenderWise();
             Console.WriteLine("******");
