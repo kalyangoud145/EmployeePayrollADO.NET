@@ -138,5 +138,64 @@ namespace EmployeePayrollADO.NET
                 }
             }
         }
+        /// <summary>
+        /// Gets the employees joined after given date range
+        /// </summary>
+        /// <param name="dateRangeQuery">The date range query.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception">
+        /// No data found
+        /// or
+        /// </exception>
+        public List<string> GetEmployeesJoiningAfterADate(string dateRangeQuery)
+        {
+            EmployeeModel model = new EmployeeModel();
+            List<string> results = new List<string>();
+            try
+            {
+                using (connection)
+                {
+                    string query = dateRangeQuery;
+                    SqlCommand command = new SqlCommand(query, connection);
+                    this.connection.Open();
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Id = dataReader.GetInt32(0);
+                            model.Name = dataReader.GetString(1);
+                            model.Salary = dataReader.GetDecimal(2);
+                            model.Start_Date = dataReader.GetDateTime(3);
+                            model.Gender = Convert.ToChar(dataReader.GetString(4));
+                            model.PhoneNumber = dataReader.GetString(5);
+                            model.Address = dataReader.GetString(6);
+                            model.Department = dataReader.GetString(7);
+                            model.basic_Pay = dataReader.GetDecimal(8);
+                            model.Deductions = dataReader.GetDecimal(9);
+                            model.Taxable_Pay = dataReader.GetDecimal(10);
+                            model.Income_tax = dataReader.GetDecimal(11);
+                            model.Net_Pay = dataReader.GetDecimal(12);
+                            results.Add(model.Name);
+                            Console.WriteLine(model.Name);
+                        }
+                        dataReader.Close();
+                        return results;
+                    }
+                    else
+                    {
+                        throw new Exception("No data found");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
     }
 }
