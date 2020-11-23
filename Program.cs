@@ -6,7 +6,8 @@ namespace EmployeePayrollADO.NET
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to employee payroll problem");
+            EmployeeRepo repo = new EmployeeRepo();
+            repo.GetAllEmployee();
         }
     }
 }
