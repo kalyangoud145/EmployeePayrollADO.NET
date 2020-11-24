@@ -485,7 +485,7 @@ namespace EmployeePayrollADO.NET
                             model.Address = dataReader.GetString(4);
                             model.DepartmentNo = dataReader.GetInt32(5);
                             // Prints the retrived values
-                            Console.WriteLine(model.Id + " " + model.Name + " " + model.Gender + " " + model.PhoneNumber + " " + model.Address + " "+model.DepartmentNo);
+                            Console.WriteLine(model.Id + " " + model.Name + " " + model.Gender + " " + model.PhoneNumber + " " + model.Address + " " + model.DepartmentNo);
                             Console.WriteLine("\n");
                         }
                     }
@@ -580,8 +580,8 @@ namespace EmployeePayrollADO.NET
                             model.Net_Pay = dataReader.GetDecimal(6);
                             model.Id = dataReader.GetInt32(7);
                             // Prints the retrived values
-                            Console.WriteLine(model.SalaryId + " " + model.Start_Date+" " + model.basic_Pay + " " + model.Deductions+" "+ model.Taxable_Pay+" "+model.Income_tax
-                                +" "+ model.Net_Pay+" "+ model.Id);
+                            Console.WriteLine(model.SalaryId + " " + model.Start_Date + " " + model.basic_Pay + " " + model.Deductions + " " + model.Taxable_Pay + " " + model.Income_tax
+                                + " " + model.Net_Pay + " " + model.Id);
                             Console.WriteLine("\n");
                         }
                     }
@@ -737,5 +737,182 @@ namespace EmployeePayrollADO.NET
             }
             return false;
         }
+        /// <summary>
+        /// Aggregate of basic pay according to gender.
+        /// </summary>
+        public void RetriveSum()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = @"select employee.gender, Sum(payroll.Basic_pay)  from Payroll inner join employee on Payroll.Id = employee.Id group by gender";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
+                            model.basic_Pay = dataReader.GetDecimal(1);
+                            // Prints the retrived values
+                            Console.WriteLine(model.Gender + " " + model.basic_Pay);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Average of basic pay by gender
+        /// </summary>
+        public void AverageOfBasicPay()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = @"select employee.gender, AVG(payroll.Basic_pay)  from Payroll  inner join employee on Payroll.Id = employee.Id group by gender";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
+                            model.basic_Pay = dataReader.GetDecimal(1);
+                            // Prints the retrived values
+                            Console.WriteLine(model.Gender + " " + model.basic_Pay);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Minimums the of basic pay.
+        /// </summary>
+        public void MinimumOfBasicPay()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = @"select employee.gender, AVG(payroll.Basic_pay)  from Payroll  inner join employee on Payroll.Id = employee.Id group by gender";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
+                            model.basic_Pay = dataReader.GetDecimal(1);
+                            // Prints the retrived values
+                            Console.WriteLine(model.Gender + " " + model.basic_Pay);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Maximum of the of basic pay.
+        /// </summary>
+        public void MaximumOfBasicPay()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = @"select gender,MAX(payroll.Basic_pay)  from Payroll payroll inner join employee emp on payroll.SalaryId = emp.Id group by gender;";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Gender = Convert.ToChar(dataReader.GetString(0));
+                            model.basic_Pay = dataReader.GetDecimal(1);
+                            // Prints the retrived values
+                            Console.WriteLine(model.Gender + " " + model.basic_Pay);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
     }
 }
