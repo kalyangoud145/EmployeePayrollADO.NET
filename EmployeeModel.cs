@@ -22,5 +22,7 @@ namespace EmployeePayrollADO.NET
         public decimal Taxable_Pay { get; set; }
         public decimal Income_tax { get; set; }
         public decimal Net_Pay { get; set; }
+        public int DepartmentNo { get; internal set; }
+        public int SalaryId { get; internal set; }
     }
 }

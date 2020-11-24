@@ -268,7 +268,7 @@ namespace EmployeePayrollADO.NET
                     SqlCommand command = new SqlCommand(query, connection);
                     connection.Open();
                     // Creates instance for data reader
-                    SqlDataReader dataReader = command.ExecuteReader();                    
+                    SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
                         // Reads all the data in table
@@ -457,6 +457,285 @@ namespace EmployeePayrollADO.NET
                     this.connection.Close();
                 }
             }
+        }
+        /// <summary>
+        /// Get all data of employee table
+        /// </summary>
+        public void GetAllEmployeeER()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = "Select * from employee";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Id = dataReader.GetInt32(0);
+                            model.Name = dataReader.GetString(1);
+                            model.Gender = Convert.ToChar(dataReader.GetString(2));
+                            model.PhoneNumber = dataReader.GetString(3);
+                            model.Address = dataReader.GetString(4);
+                            model.DepartmentNo = dataReader.GetInt32(5);
+                            // Prints the retrived values
+                            Console.WriteLine(model.Id + " " + model.Name + " " + model.Gender + " " + model.PhoneNumber + " " + model.Address + " "+model.DepartmentNo);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
+        }
+        /// <summary>
+        /// Gets all employee department data
+        /// </summary>
+        public void GetAllDepartmentER()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = "Select * from EmployeeDepartment";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.DepartmentNo = dataReader.GetInt32(0);
+                            model.Department = dataReader.GetString(1);
+                            // Prints the retrived values
+                            Console.WriteLine(model.DepartmentNo + " " + model.Department);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Gets all payroll table data
+        /// </summary>
+        public void GetAllPayrollER()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = "Select * from Payroll";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.SalaryId = dataReader.GetInt32(0);
+                            model.Start_Date = dataReader.GetDateTime(1);
+                            model.basic_Pay = dataReader.GetDecimal(2);
+                            model.Deductions = dataReader.GetDecimal(3);
+                            model.Taxable_Pay = dataReader.GetDecimal(4);
+                            model.Income_tax = dataReader.GetDecimal(5);
+                            model.Net_Pay = dataReader.GetDecimal(6);
+                            model.Id = dataReader.GetInt32(7);
+                            // Prints the retrived values
+                            Console.WriteLine(model.SalaryId + " " + model.Start_Date+" " + model.basic_Pay + " " + model.Deductions+" "+ model.Taxable_Pay+" "+model.Income_tax
+                                +" "+ model.Net_Pay+" "+ model.Id);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
+        }
+        /// <summary>
+        /// Adds data to employee table
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public bool AddEmployeeER(EmployeeModel model)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    // Created instance of the given query and connection
+                    SqlCommand sqlCommand = new SqlCommand("spEmployee", this.connection);
+                    // Command type  as text for stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    // Adds the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@Name", model.Name);
+                    sqlCommand.Parameters.AddWithValue("@Gender", model.Gender);
+                    sqlCommand.Parameters.AddWithValue("@Phone_Number", model.PhoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@Address", model.Address);
+                    sqlCommand.Parameters.AddWithValue("@DepartmentNumber", model.DepartmentNo);
+                    this.connection.Open();
+                    // Returns the number of rows effected
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    // If number of rows not equal to zero then retuns true 
+                    // Else returns false
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+            return false;
+        }
+        /// <summary>
+        /// Adds data to employee payroll table
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public bool AddEmployeePayrollER(EmployeeModel model)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    // Created instance of the given query and connection
+                    SqlCommand sqlCommand = new SqlCommand("spEmployeePayroll", this.connection);
+                    // Command type  as text for stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    // Adds the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@start", DateTime.Now);
+                    sqlCommand.Parameters.AddWithValue("@Basic_pay", model.basic_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Deduction", model.Deductions);
+                    sqlCommand.Parameters.AddWithValue("@Taxable_pay", model.Taxable_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Income_tax", model.Income_tax);
+                    sqlCommand.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Id", model.Id);
+                    this.connection.Open();
+                    // Returns the number of rows effected
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    // If number of rows not equal to zero then retuns true 
+                    // Else returns false
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+            return false;
+        }
+        /// <summary>
+        /// Add data to employee department table
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public bool AddEmployeeDepartmentER(EmployeeModel model)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    // Created instance of the given query and connection
+                    SqlCommand sqlCommand = new SqlCommand("spEmployeeDepartment", this.connection);
+                    // Command type  as text for stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    // Adds the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@Department", model.Department);
+                    sqlCommand.Parameters.AddWithValue("@DepartmentNumber", model.DepartmentNo);
+                    this.connection.Open();
+                    // Returns the number of rows effected
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    // If number of rows not equal to zero then retuns true 
+                    // Else returns false
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+            return false;
         }
     }
 }
