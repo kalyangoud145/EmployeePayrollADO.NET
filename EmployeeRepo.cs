@@ -268,7 +268,7 @@ namespace EmployeePayrollADO.NET
                     SqlCommand command = new SqlCommand(query, connection);
                     connection.Open();
                     // Creates instance for data reader
-                    SqlDataReader dataReader = command.ExecuteReader();                    
+                    SqlDataReader dataReader = command.ExecuteReader();
                     if (dataReader.HasRows)
                     {
                         // Reads all the data in table
@@ -458,5 +458,151 @@ namespace EmployeePayrollADO.NET
                 }
             }
         }
+        /// <summary>
+        /// Get all data of employee table
+        /// </summary>
+        public void GetAllEmployeeER()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = "Select * from employee";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.Id = dataReader.GetInt32(0);
+                            model.Name = dataReader.GetString(1);
+                            model.Gender = Convert.ToChar(dataReader.GetString(2));
+                            model.PhoneNumber = dataReader.GetString(3);
+                            model.Address = dataReader.GetString(4);
+                            model.DepartmentNo = dataReader.GetInt32(5);
+                            // Prints the retrived values
+                            Console.WriteLine(model.Id + " " + model.Name + " " + model.Gender + " " + model.PhoneNumber + " " + model.Address + " "+model.DepartmentNo);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
+        }
+        /// <summary>
+        /// Gets all employee department data
+        /// </summary>
+        public void GetAllDepartmentER()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = "Select * from EmployeeDepartment";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.DepartmentNo = dataReader.GetInt32(0);
+                            model.Department = dataReader.GetString(1);
+                            // Prints the retrived values
+                            Console.WriteLine(model.DepartmentNo + " " + model.Department);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        /// <summary>
+        /// Gets all payroll table data
+        /// </summary>
+        public void GetAllPayrollER()
+        {
+            try
+            {
+                EmployeeModel model = new EmployeeModel();
+                using (this.connection)
+                {
+                    // Query for retriving all the data
+                    string query = "Select * from Payroll";
+                    SqlCommand cmd = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    // Reads the passed data base
+                    SqlDataReader dataReader = cmd.ExecuteReader();
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            model.SalaryId = dataReader.GetInt32(0);
+                            model.Start_Date = dataReader.GetDateTime(1);
+                            model.basic_Pay = dataReader.GetDecimal(2);
+                            model.Deductions = dataReader.GetDecimal(3);
+                            model.Taxable_Pay = dataReader.GetDecimal(4);
+                            model.Income_tax = dataReader.GetDecimal(5);
+                            model.Net_Pay = dataReader.GetDecimal(6);
+                            model.Id = dataReader.GetInt32(7);
+                            // Prints the retrived values
+                            Console.WriteLine(model.SalaryId + " " + model.Start_Date+" " + model.basic_Pay + " " + model.Deductions+" "+ model.Taxable_Pay+" "+model.Income_tax
+                                +" "+ model.Net_Pay+" "+ model.Id);
+                            Console.WriteLine("\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
+                    }
+                    dataReader.Close();
+                    this.connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+
+        }
+        
     }
 }
