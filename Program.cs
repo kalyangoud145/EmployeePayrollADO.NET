@@ -23,7 +23,9 @@ namespace EmployeePayrollADO.NET
             repo.AddEmployeeDepartmentER(model);
             repo.GetAllDepartmentER();
             repo.GetAllPayrollER();
-
+            repo.RetriveSum();
+            repo.AverageOfBasicPay();
+            repo.MaximumOfBasicPay();
         }
     }
 }
