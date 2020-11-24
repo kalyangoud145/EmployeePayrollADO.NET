@@ -20,11 +20,11 @@ namespace EmployeePayrollADO.NET
             model.Name = "Anirudh";
             model.Gender = 'M';
             model.Address = "HYD";
-            // repo.AddEmployeeDepartmentER(model);
-            ////repo.GetAllDepartmentER();
-            // repo.GetAllPayrollER();
-            //repo.RetriveSum();
-            //repo.AverageOfBasicPay();
+            repo.AddEmployeeDepartmentER(model);
+            repo.GetAllDepartmentER();
+            repo.GetAllPayrollER();
+            repo.RetriveSum();
+            repo.AverageOfBasicPay();
             repo.MaximumOfBasicPay();
         }
     }
