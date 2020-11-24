@@ -603,6 +603,139 @@ namespace EmployeePayrollADO.NET
             }
 
         }
-        
+        /// <summary>
+        /// Adds data to employee table
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public bool AddEmployeeER(EmployeeModel model)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    // Created instance of the given query and connection
+                    SqlCommand sqlCommand = new SqlCommand("spEmployee", this.connection);
+                    // Command type  as text for stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    // Adds the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@Name", model.Name);
+                    sqlCommand.Parameters.AddWithValue("@Gender", model.Gender);
+                    sqlCommand.Parameters.AddWithValue("@Phone_Number", model.PhoneNumber);
+                    sqlCommand.Parameters.AddWithValue("@Address", model.Address);
+                    sqlCommand.Parameters.AddWithValue("@DepartmentNumber", model.DepartmentNo);
+                    this.connection.Open();
+                    // Returns the number of rows effected
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    // If number of rows not equal to zero then retuns true 
+                    // Else returns false
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+            return false;
+        }
+        /// <summary>
+        /// Adds data to employee payroll table
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public bool AddEmployeePayrollER(EmployeeModel model)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    // Created instance of the given query and connection
+                    SqlCommand sqlCommand = new SqlCommand("spEmployeePayroll", this.connection);
+                    // Command type  as text for stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    // Adds the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@start", DateTime.Now);
+                    sqlCommand.Parameters.AddWithValue("@Basic_pay", model.basic_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Deduction", model.Deductions);
+                    sqlCommand.Parameters.AddWithValue("@Taxable_pay", model.Taxable_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Income_tax", model.Income_tax);
+                    sqlCommand.Parameters.AddWithValue("@Net_Pay", model.Net_Pay);
+                    sqlCommand.Parameters.AddWithValue("@Id", model.Id);
+                    this.connection.Open();
+                    // Returns the number of rows effected
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    // If number of rows not equal to zero then retuns true 
+                    // Else returns false
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+            return false;
+        }
+        /// <summary>
+        /// Add data to employee department table
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public bool AddEmployeeDepartmentER(EmployeeModel model)
+        {
+
+            try
+            {
+                using (this.connection)
+                {
+                    // Created instance of the given query and connection
+                    SqlCommand sqlCommand = new SqlCommand("spEmployeeDepartment", this.connection);
+                    // Command type  as text for stored procedure
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    // Adds the values to the stored procedure
+                    sqlCommand.Parameters.AddWithValue("@Department", model.Department);
+                    sqlCommand.Parameters.AddWithValue("@DepartmentNumber", model.DepartmentNo);
+                    this.connection.Open();
+                    // Returns the number of rows effected
+                    var result = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    // If number of rows not equal to zero then retuns true 
+                    // Else returns false
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+            return false;
+        }
     }
 }
