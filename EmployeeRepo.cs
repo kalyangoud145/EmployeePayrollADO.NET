@@ -425,7 +425,7 @@ namespace EmployeePayrollADO.NET
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.Exception"></exception>
-        public bool DeleteValue()
+        public bool DeleteValue(string tableName, string searchCondition)
         {
             using (this.connection)
             {
@@ -434,7 +434,7 @@ namespace EmployeePayrollADO.NET
                     this.connection.Open();
                     SqlCommand command = this.connection.CreateCommand();
                     // Query for deleting the data from table
-                    command.CommandText = "delete from Employee_Payroll where Id =3";
+                    command.CommandText = "delete from "+ tableName + " where " +searchCondition;
                     // Returns number of rows effected
                     int numberOfEffectedRows = command.ExecuteNonQuery();
                     // If number of rows not equal to zero then retuns true 
