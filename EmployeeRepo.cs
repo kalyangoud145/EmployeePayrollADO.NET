@@ -434,7 +434,7 @@ namespace EmployeePayrollADO.NET
                     this.connection.Open();
                     SqlCommand command = this.connection.CreateCommand();
                     // Query for deleting the data from table
-                    command.CommandText = "delete from "+ tableName + " where " +searchCondition;
+                    command.CommandText = "delete from " + tableName + " where " + searchCondition;
                     // Returns number of rows effected
                     int numberOfEffectedRows = command.ExecuteNonQuery();
                     // If number of rows not equal to zero then retuns true 
