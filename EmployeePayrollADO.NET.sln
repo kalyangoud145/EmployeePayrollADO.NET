@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeePayrollADO.NET", "EmployeePayrollADO.NET.csproj", "{767888DE-B201-4B96-A571-7AB0C117422D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeePayrollTest", "..\EmployeePayrollTest\EmployeePayrollTest.csproj", "{14A8E4C8-490B-4E79-8A8D-C66D60CB7839}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeePayrollTest", "..\EmployeePayrollTest\EmployeePayrollTest.csproj", "{14A8E4C8-490B-4E79-8A8D-C66D60CB7839}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
