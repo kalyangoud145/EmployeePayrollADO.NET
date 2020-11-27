@@ -135,5 +135,58 @@ namespace EmployeePayrollADO.NET
                 thread.Start();
             });
         }
+        /// UC3
+        /// <summary>
+        /// Adds the employee to payroll data base with thread in synchronization manner 
+        /// </summary>
+        /// <param name="employeePayrollDataList">The employee payroll data list.</param>
+        public void AddEmployeesWithThreadsAndSynchronization(List<EmployeeModel> employeeDetails)
+        {
+            employeeDetails.ForEach(employeeData =>
+            {
+                Thread thread = new Thread(() =>
+                {
+                    // mutex waitone method is used
+                    // this method does not allow to other threads to go in it,
+                    // until current thread execution is complete
+                    mutex.WaitOne();
+                    AddEmployee(employeeData);
+                    Console.WriteLine("Employee added" + employeeData.Name);
+                    Console.WriteLine("Current Thread Id" + Thread.CurrentThread.ManagedThreadId);
+                    // realease mutex is used, which releases current thread and 
+                    // allows new thread to be used.
+                    mutex.ReleaseMutex();
+                });
+                // Start all the threads
+                thread.Start();
+                thread.Join();
+            });
+        }
+        /// <summary>
+        /// Adds the employees to list with threads and synchronization.
+        /// </summary>
+        /// <param name="employeeDetails">The employee details.</param>
+        public void AddEmployeesToListWithThreadsAndSynchronization(List<EmployeeModel> employeeDetails)
+        {
+            employeeDetails.ForEach(employeeData =>
+            {
+                Thread thread = new Thread(() =>
+                {
+                    // mutex waitone method is used
+                    // this method does not allow to other threads to go in it,
+                    // until current thread execution is complete
+                    mutex.WaitOne();
+                    this.employeeDataList.Add(employeeData);
+                    Console.WriteLine("Employee added" + employeeData.Name);
+                    Console.WriteLine("Current Thread Id" + Thread.CurrentThread.ManagedThreadId);
+                    // realease mutex is used, which releases current thread and 
+                    // allows new thread to be used.
+                    mutex.ReleaseMutex();
+                });
+                // Start all the threads
+                thread.Start();
+                thread.Join();
+            });
+        }
     }
 }

@@ -183,7 +183,7 @@ namespace EmployeePayrollTest
             return employeeList;
         }
         /// <summary>
-        /// Givens the multiple employee data to add without threading when database is connected should return true and elapsed time.
+        /// Given  multiple employee data to add without threading when database is connected should return true.
         /// </summary>
         [TestMethod]
         public void GivenMultipleEmployeeDataToAddWithoutThreading_WhenDatabaseIsConnected_ShouldReturnTrueAndElapsedTime()
@@ -201,7 +201,7 @@ namespace EmployeePayrollTest
             Assert.AreEqual(expected, actual);
         }
         /// <summary>
-        /// Givens the multiple employee data to add without threading to list should give elapsed time.
+        /// Compares the time adding to list  without threading.
         /// </summary>
         [TestMethod]
         public void GivenMultipleEmployeeDataToAddWithoutThreadingToList_ShouldGiveElapsedTime()
@@ -230,7 +230,7 @@ namespace EmployeePayrollTest
             Console.WriteLine("Time taken to add to db  threads is :{0} ", stopwatch.Elapsed);
         }
         /// <summary>
-        /// Givens the multiple employee data to add with threading to list should give elapsed time.
+        /// Compares the time adding to list with threading.
         /// </summary>
         [TestMethod]
         public void GivenMultipleEmployeeDataToAddWithThreadingToList_ShouldGiveElapsedTime()
@@ -240,6 +240,36 @@ namespace EmployeePayrollTest
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             multiThreading.AddToListWithThreading(employeeList);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken while adding to list with threading:{0}  ", stopwatch.Elapsed);
+        }
+        /// <summary>
+        /// Givens the multiple employee data to add with threading and in synchronisation
+        /// to database should give elapsed time.
+        /// </summary>
+        [TestMethod]
+        public void GivenMultipleEmployeeDataToAddWithThreadingAndInSynchronisation_ToDatabase_ShouldGiveElapsedTime()
+        {
+            List<EmployeeModel> employeeList = AddingDataToList();
+            MultiThreadingOperations multiThreading = new MultiThreadingOperations();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            multiThreading.AddEmployeesWithThreadsAndSynchronization(employeeList);
+            stopwatch.Stop();
+            Console.WriteLine("Time taken while adding to list with threading:{0}  ", stopwatch.Elapsed);
+        }
+        /// <summary>
+        /// Givens the multiple employee data to add with threading and
+        /// in synchronisation to list should give elapsed time.
+        /// </summary>
+        [TestMethod]
+        public void GivenMultipleEmployeeDataToAddWithThreadingAndInSynchronisation_ToList_ShouldGiveElapsedTime()
+        {
+            List<EmployeeModel> employeeList = AddingDataToList();
+            MultiThreadingOperations multiThreading = new MultiThreadingOperations();
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            multiThreading.AddEmployeesWithThreadsAndSynchronization(employeeList);
             stopwatch.Stop();
             Console.WriteLine("Time taken while adding to list with threading:{0}  ", stopwatch.Elapsed);
         }
