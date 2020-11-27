@@ -24,5 +24,22 @@ namespace EmployeePayrollADO.NET
         public decimal Net_Pay { get; set; }
         public int DepartmentNo { get;  set; }
         public int SalaryId { get; set; }
+
+        /*public EmployeeModel(string name, decimal salary, DateTime start_Date, char gender, string phoneNumber, string address, string department, decimal basic_Pay, decimal deductions, decimal taxable_Pay, decimal income_tax, decimal net_Pay)
+        {
+            this.Name = name;
+            this.Salary = salary;
+            this.Start_Date = start_Date;
+            this.Gender = gender;
+            this.PhoneNumber = phoneNumber;
+            this.Address = address;
+            this.Department = department;
+            this.basic_Pay = basic_Pay;
+            this.Deductions = deductions;
+            this.Taxable_Pay = taxable_Pay;
+            this.Income_tax = income_tax;
+            this.Net_Pay = net_Pay;
+        }*/
+
     }
 }
