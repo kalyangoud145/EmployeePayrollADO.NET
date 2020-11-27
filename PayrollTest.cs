@@ -183,7 +183,7 @@ namespace EmployeePayrollTest
             return employeeList;
         }
         /// <summary>
-        /// Given  multiple employee data to add without threading when database is connected should return true.
+        /// Givens the multiple employee data to add without threading when database is connected should return true and elapsed time.
         /// </summary>
         [TestMethod]
         public void GivenMultipleEmployeeDataToAddWithoutThreading_WhenDatabaseIsConnected_ShouldReturnTrueAndElapsedTime()
@@ -201,7 +201,7 @@ namespace EmployeePayrollTest
             Assert.AreEqual(expected, actual);
         }
         /// <summary>
-        /// Compares the time adding to list  without threading.
+        /// Givens the multiple employee data to add without threading to list should give elapsed time.
         /// </summary>
         [TestMethod]
         public void GivenMultipleEmployeeDataToAddWithoutThreadingToList_ShouldGiveElapsedTime()
@@ -230,7 +230,7 @@ namespace EmployeePayrollTest
             Console.WriteLine("Time taken to add to db  threads is :{0} ", stopwatch.Elapsed);
         }
         /// <summary>
-        /// Compares the time adding to list with threading.
+        /// Givens the multiple employee data to add with threading to list should give elapsed time.
         /// </summary>
         [TestMethod]
         public void GivenMultipleEmployeeDataToAddWithThreadingToList_ShouldGiveElapsedTime()
