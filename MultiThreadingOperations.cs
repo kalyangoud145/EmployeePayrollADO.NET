@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EmployeePayrollADO.NET
 {
     public class MultiThreadingOperations
     {
+        Mutex mutex = new Mutex();
         public List<EmployeeModel> employeeDataList = new List<EmployeeModel>();
-        public static string connectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = Payroll_Service; Integrated Security = True";
-
         EmployeeRepo repo = new EmployeeRepo();
         /// <summary>
         /// Method adds the values to the table and return true if added or false
@@ -19,7 +20,8 @@ namespace EmployeePayrollADO.NET
         /// <returns></returns>
         public bool AddEmployee(EmployeeModel model)
         {
-            SqlConnection connection = new SqlConnection(connectionString);
+            // Gets connection to the database
+            SqlConnection connection = DBConnection.GetConnection();
             try
             {
                 using (connection)
@@ -65,6 +67,10 @@ namespace EmployeePayrollADO.NET
             }
             return false;
         }
+        /// <summary>
+        /// Adds data to list without threading.
+        /// </summary>
+        /// <param name="empList">The emp list.</param>
         public void AddToListWithoutThreading(List<EmployeeModel> empList)
         {
             empList.ForEach(employee =>
@@ -93,6 +99,41 @@ namespace EmployeePayrollADO.NET
                     return false;
             }
             return true;
+        }
+        /// <summary>
+        /// Adds the employee list to database with threading
+        /// </summary>
+        /// <param name="empList">The emp list.</param>
+        /// <returns></returns>
+        public bool AddEmployeeListToDBWithThread(List<EmployeeModel> empList)
+        {
+            bool result = false;
+            empList.ForEach(employeeData =>
+            {
+                Thread thread = new Thread(() =>
+                {
+                    result = AddEmployee(employeeData);
+                    Console.WriteLine("Employee added" + employeeData.Name);
+                });
+                // Start all the threads
+                thread.Start();
+                thread.Join();
+            });
+            return result;
+
+        }
+        public void AddToListWithThreading(List<EmployeeModel> empList)
+        {
+            empList.ForEach(employee =>
+            {
+                Task thread = new Task(() =>
+                {
+                    Console.WriteLine("Employee Being added" + employee.Name);
+                    this.employeeDataList.Add(employee);
+                    Console.WriteLine("Employee added: " + employee.Name);
+                });
+                thread.Start();
+            });
         }
     }
 }
