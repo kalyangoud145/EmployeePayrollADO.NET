@@ -122,6 +122,10 @@ namespace EmployeePayrollADO.NET
             return result;
 
         }
+        /// <summary>
+        /// Added multiple employee data to list using threading
+        /// </summary>
+        /// <param name="empList"></param>
         public void AddToListWithThreading(List<EmployeeModel> empList)
         {
             empList.ForEach(employee =>
